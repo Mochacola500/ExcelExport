@@ -10,7 +10,7 @@ namespace ExcelExport
             {
                 throw new Exception($"Split token missing.\ntext:{text}");
             }
-            var type = text.Substring(i).Trim();
+            var type = text.Substring(i + splitToken.Length).Trim();
             var name = text.Substring(0, i).Trim();
             return (type, name);
         }
