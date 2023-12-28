@@ -26,7 +26,7 @@ namespace ExcelExport
 
                 var dataArray = m_DataTable.Rows
                     .Cast<DataRow>()
-                    .Select(x => x.ItemArray.Cast<string>().ToArray());
+                    .Select(x => x.ItemArray.Select(x => x?.ToString() ?? "").ToArray());
 
                 csv = CsvSerializer.Serialize(m_Options.Seperator, columnNames, dataArray);
             }
