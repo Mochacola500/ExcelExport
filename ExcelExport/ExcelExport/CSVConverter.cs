@@ -17,6 +17,8 @@ namespace ExcelExport
         {
             string csv = "";
             Exception? ex = null;
+            var tableName = m_DataTable.TableName.Trim();
+
             try
             {
                 var columnNames = m_DataTable.Columns
@@ -35,7 +37,7 @@ namespace ExcelExport
                 ex = ex2;
             }
 
-            return new(csv, ex);
+            return new(tableName, csv, ex);
         }
     }
 }

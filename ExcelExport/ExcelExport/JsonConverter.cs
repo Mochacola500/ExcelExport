@@ -17,6 +17,8 @@ namespace ExcelExport
         {
             string json = "";
             Exception? ex = null;
+            var tableName = m_DataTable.TableName.Trim();
+
             try
             {
                 var columnNames = m_DataTable.Columns
@@ -28,7 +30,18 @@ namespace ExcelExport
                     .Cast<DataRow>()
                     .Select(x => x.ItemArray.Select(x => x?.ToString() ?? " ").ToArray());
 
-                var sr = new JsonSerializer(columnNames);
+                var type = (columnNames.Length > 0 && columnNames[0] == m_Options.IdToken) ?
+                    ExportCollectionType.Dictionary :
+                    dataArray.Count() == 1 ? 
+                    ExportCollectionType.Member :
+                    ExportCollectionType.List;
+
+                if (m_Options.ExportToArray)
+                {
+                    type = ExportCollectionType.List;
+                }
+
+                var sr = new JsonSerializer(type, columnNames);
                 json = sr.Serialize(dataArray);
             }
             catch (Exception ex2)
@@ -36,7 +49,7 @@ namespace ExcelExport
                 ex = ex2;
             }
 
-            return new(json, ex);
+            return new(tableName, json, ex);
         }
     }
 }
