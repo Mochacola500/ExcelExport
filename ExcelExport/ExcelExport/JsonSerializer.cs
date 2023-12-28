@@ -17,7 +17,7 @@ namespace ExcelExport
         {
             m_JsonBuilder.Clear();
             m_JsonBuilder.Append("[");
-            if (!dataArray.Any())
+            if (dataArray.Any())
             {
                 var firstItem = dataArray.First();
                 WriteData(firstItem);

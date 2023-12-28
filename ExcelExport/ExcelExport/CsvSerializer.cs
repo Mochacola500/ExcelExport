@@ -45,19 +45,32 @@ namespace ExcelExport
             m_CsvBuilder.AppendLine();
 
             // Write Data.
-            foreach (var columns in dataArray)
+            if (dataArray.Any())
             {
-                string firstField = columns.Length > 0 ? columns[0] : " ";
-                WriteField(firstField);
-                for (int i = 1; i < columns.Length; ++i)
+                var firstItem = dataArray.First();
+                WriteData(firstItem);
+                var e = dataArray.GetEnumerator();
+                // Skip first array.
+                e.MoveNext();
+                while (e.MoveNext())
                 {
-                    m_CsvBuilder.Append(m_Seperator);
-                    var column = columns[i];
-                    WriteField(column);
+                    m_CsvBuilder.AppendLine();
+                    WriteData(e.Current);
                 }
-                m_CsvBuilder.Append("\r\n");
             }
             return m_CsvBuilder.ToString();
+        }
+
+        void WriteData(string[] columns)
+        {
+            string firstField = columns.Length > 0 ? columns[0] : " ";
+            WriteField(firstField);
+            for (int i = 1; i < columns.Length; ++i)
+            {
+                m_CsvBuilder.Append(m_Seperator);
+                var column = columns[i];
+                WriteField(column);
+            }
         }
 
         void WriteField(string column)
