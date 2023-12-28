@@ -40,6 +40,7 @@ namespace ExcelExport
             {
                 option = new();
             }
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var dataReader = ExcelReaderFactory.CreateReader(stream, g_ReaderConfig);
             var dataTable = dataReader.AsDataSet(g_DataSetConfig);
             return new ExcelExport(dataTable, option);
