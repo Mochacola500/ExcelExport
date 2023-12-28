@@ -7,9 +7,15 @@ namespace ExcelExport.Test
         ExcelExport m_Export;
 
         [SetUp]
-        public void Setup()
+        public void Init()
         {
             m_Export = ExcelExport.Load("../../../SimpleData.xlsx");
+        }
+
+        [TearDown]
+        public void CleanUp()
+        {
+            m_Export.Dispose();
         }
 
         [Test]
