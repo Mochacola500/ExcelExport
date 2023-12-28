@@ -26,7 +26,7 @@ namespace ExcelExport
 
                 var dataArray = m_DataTable.Rows
                     .Cast<DataRow>()
-                    .Select(x => x.ItemArray.Cast<string>().ToArray());
+                    .Select(x => x.ItemArray.Select(x => x?.ToString() ?? " ").ToArray());
 
                 var sr = new JsonSerializer(columnNames);
                 json = sr.Serialize(dataArray);
