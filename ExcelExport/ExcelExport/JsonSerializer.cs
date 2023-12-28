@@ -36,9 +36,12 @@ namespace ExcelExport
 
         void WriteData(string[] columns)
         {
+            if (columns.Length == 0)
+            {
+                return;
+            }
             m_JsonBuilder.Append("{");
-            var firstField = columns.Length > 0 ? columns[0] : " ";
-            WriteField(firstField, 0);
+            WriteField(columns[0], 0);
             for (int i = 1; i < columns.Length; ++i)
             {
                 var column = columns[i];

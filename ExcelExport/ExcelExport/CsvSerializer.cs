@@ -63,8 +63,11 @@ namespace ExcelExport
 
         void WriteData(string[] columns)
         {
-            string firstField = columns.Length > 0 ? columns[0] : " ";
-            WriteField(firstField);
+            if (columns.Length == 0)
+            {
+                return;
+            }
+            WriteField(columns[0]);
             for (int i = 1; i < columns.Length; ++i)
             {
                 m_CsvBuilder.Append(m_Seperator);
